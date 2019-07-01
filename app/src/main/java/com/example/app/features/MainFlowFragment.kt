@@ -25,6 +25,8 @@ class MainFlowFragment : BaseFragment() {
         val view = inflater.inflate(getLayoutID(), container, false)
         setHasOptionsMenu(true)
 
+        (activity as MainActivity).setSupportActionBar(view.toolbar)
+
 //        childFragmentManager.beginTransaction()
 //            .add(getContainerID(), .newInstance(), "MAP")
 //            .commit()
