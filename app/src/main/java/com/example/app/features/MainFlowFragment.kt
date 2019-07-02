@@ -6,6 +6,7 @@ import android.view.*
 import com.example.app.App
 import com.example.app.R
 import com.example.app.core.PreferencesApi
+import com.example.app.features.map.MapFragment
 import com.example.app.features.profile.ProfileFragment
 import kotlinx.android.synthetic.main.fragment_mainflow.view.*
 import com.example.app.features.signin.SignInFragment
@@ -27,12 +28,12 @@ class MainFlowFragment : BaseFragment() {
 
         (activity as MainActivity).setSupportActionBar(view.toolbar)
 
-//        childFragmentManager.beginTransaction()
-//            .add(getContainerID(), .newInstance(), "MAP")
-//            .commit()
         childFragmentManager.beginTransaction()
-            .add(getContainerID(), SignInFragment.newInstance(), "SIGNIN")
+            .add(getContainerID(), MapFragment.newInstance(), "MAP")
             .commit()
+//        childFragmentManager.beginTransaction()
+//            .add(getContainerID(), SignInFragment.newInstance(), "SIGNIN")
+//            .commit()
         return view
     }
 
