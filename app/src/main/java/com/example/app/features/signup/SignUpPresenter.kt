@@ -5,19 +5,17 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.core.PreferencesApi
-import com.example.app.core.model.User
 import com.example.app.core.model.UserSignUpPayload
-import com.example.app.core.model.Wrapper
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 import com.example.app.features.signup.api.SignUpApi
+import kotlinx.coroutines.*
+import retrofit2.Retrofit
 import javax.inject.Inject
 
 @InjectViewState
 class SignUpPresenter : MvpPresenter<SingUpView>() {
 
+    private val uiScope = CoroutineScope(Dispatchers.Main)
+    private val ioDispatcher : CoroutineDispatcher = Dispatchers.IO
 
     @Inject
     lateinit var retrofit: Retrofit
@@ -26,20 +24,32 @@ class SignUpPresenter : MvpPresenter<SingUpView>() {
     lateinit var prefs: SharedPreferences
 
 
-    private val signUpApi: SignUpApi
+    private val api: SignUpApi
 
     init {
         App.INSTANCE.getAppComponent().inject(this)
-        signUpApi = retrofit.create(SignUpApi::class.java)
+        api = retrofit.create(SignUpApi::class.java)
     }
 
     var name = ""
     var password = ""
     var login = ""
 
-    fun createUser(){
+    fun createUser() {
         if (name.isNotBlank() && password.isNotBlank() && login.isNotBlank())
-            signUpApi.createUser(UserSignUpPayload(login, name, password)).enqueue(object : Callback<Wrapper<User>>{
+            uiScope.launch(ioDispatcher) {
+                try {
+                    val response = withContext(ioDispatcher) {
+                        api.createUser(UserSignUpPayload(login, name, password))
+                    }.data
+                    PreferencesApi.setUser(prefs, response)
+                    viewState.onUserSignUp()
+                } catch (t: Throwable) {
+
+                }
+            }
+            /*
+            api.createUser(UserSignUpPayload(login, name, password)).enqueue(object : Callback<Wrapper<User>>{
                 override fun onFailure(call: Call<Wrapper<User>>, t: Throwable) {
 
                 }
@@ -50,5 +60,6 @@ class SignUpPresenter : MvpPresenter<SingUpView>() {
                 }
 
             })
+            */
     }
 }

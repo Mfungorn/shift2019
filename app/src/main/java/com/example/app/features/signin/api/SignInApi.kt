@@ -10,5 +10,5 @@ import retrofit2.http.POST
 interface SignInApi {
 
     @POST("users/auth")
-    fun authUser(@Body user: UserSignInPayload): Call<Wrapper<User>>
+    fun authUser(@Body user: UserSignInPayload): Wrapper<User>
 }

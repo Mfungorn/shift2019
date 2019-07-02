@@ -10,5 +10,5 @@ import retrofit2.http.POST
 interface SignUpApi {
 
     @POST("users/signup")
-    fun createUser(@Body user: UserSignUpPayload): Call<Wrapper<User>>
+    fun createUser(@Body user: UserSignUpPayload): Wrapper<User>
 }

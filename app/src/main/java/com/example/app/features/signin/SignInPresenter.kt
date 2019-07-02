@@ -5,14 +5,10 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.core.PreferencesApi
-import com.example.app.core.model.User
 import com.example.app.core.model.UserSignInPayload
-import com.example.app.core.model.Wrapper
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 import com.example.app.features.signin.api.SignInApi
+import kotlinx.coroutines.*
+import retrofit2.Retrofit
 import javax.inject.Inject
 
 @InjectViewState
@@ -20,6 +16,9 @@ class SignInPresenter: MvpPresenter<SignInView>(){
 
     var login = ""
     var password = ""
+
+    private val uiScope = CoroutineScope(Dispatchers.Main)
+    private val ioDispatcher : CoroutineDispatcher = Dispatchers.IO
 
     @Inject
     lateinit var retrofit: Retrofit
@@ -36,7 +35,19 @@ class SignInPresenter: MvpPresenter<SignInView>(){
 
     fun signInUser() {
         if (login.isNotBlank() && password.isNotBlank())
-            api.authUser(UserSignInPayload(login, password)).enqueue(object : Callback<Wrapper<User>>{
+            uiScope.launch {
+                try {
+                    val response = withContext(ioDispatcher) {
+                        api.authUser(UserSignInPayload(login, password))
+                    }.data
+                    PreferencesApi.setUser(prefs, response)
+                    viewState.onUserAuthenticate()
+                } catch (t: Throwable) {
+                    viewState.showMessage("Неверные данные")
+                }
+            }
+            /*
+           api.authUser(UserSignInPayload(login, password)).enqueue(object : Callback<Wrapper<User>>{
                 override fun onFailure(call: Call<Wrapper<User>>, t: Throwable) {
                     viewState.showMessage("Неверные данные")
                 }
@@ -46,6 +57,7 @@ class SignInPresenter: MvpPresenter<SignInView>(){
                     viewState.onUserAuthenticate()
                 }
             })
+            */
 
     }
 }

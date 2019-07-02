@@ -30,6 +30,9 @@ class MainFlowFragment : BaseFragment() {
 //        childFragmentManager.beginTransaction()
 //            .add(getContainerID(), .newInstance(), "MAP")
 //            .commit()
+        childFragmentManager.beginTransaction()
+            .add(getContainerID(), SignInFragment.newInstance(), "SIGNIN")
+            .commit()
         return view
     }
 
