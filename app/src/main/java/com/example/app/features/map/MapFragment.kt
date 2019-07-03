@@ -60,7 +60,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         }
 
         geoApiContext = GeoApiContext.Builder()
-            .apiKey("AIzaSyDVsJx-Hyq6w4laps9vUcA1gbq-mWLtH78")
+            .apiKey("AIzaSyAZ4Yk6d5JF7E9CQSr7kbruIuZzMy9lttg")
             .build()
         googleApiClient = GoogleApiClient.Builder(context!!)
             .addConnectionCallbacks(this)
@@ -193,7 +193,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
         googleMap.addMarker(MarkerOptions().position(p0!!).draggable(true))
         latitude = p0.latitude
         longitude = p0.longitude
-        Toast.makeText(context, "Lat:$latitude, Lng:$longitude", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Lat:$latitude\nLng:$longitude", Toast.LENGTH_SHORT).show()
     }
 
     override fun onMarkerDragStart(marker: Marker) {

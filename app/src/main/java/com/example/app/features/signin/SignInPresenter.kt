@@ -10,15 +10,16 @@ import com.example.app.features.signin.api.SignInApi
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 @InjectViewState
-class SignInPresenter: MvpPresenter<SignInView>(){
+class SignInPresenter: MvpPresenter<SignInView>(), CoroutineScope {
 
     var login = ""
     var password = ""
 
-    private val uiScope = CoroutineScope(Dispatchers.Main)
-    private val ioDispatcher : CoroutineDispatcher = Dispatchers.IO
+    override val coroutineContext: CoroutineContext =
+        Dispatchers.Main + SupervisorJob()
 
     @Inject
     lateinit var retrofit: Retrofit
@@ -35,9 +36,9 @@ class SignInPresenter: MvpPresenter<SignInView>(){
 
     fun signInUser() {
         if (login.isNotBlank() && password.isNotBlank())
-            uiScope.launch {
+            this.launch {
                 try {
-                    val response = withContext(ioDispatcher) {
+                    val response = withContext(Dispatchers.IO) {
                         api.authUser(UserSignInPayload(login, password))
                     }.data
                     PreferencesApi.setUser(prefs, response)
@@ -46,6 +47,7 @@ class SignInPresenter: MvpPresenter<SignInView>(){
                     viewState.showMessage("Неверные данные")
                 }
             }
+
             /*
            api.authUser(UserSignInPayload(login, password)).enqueue(object : Callback<Wrapper<User>>{
                 override fun onFailure(call: Call<Wrapper<User>>, t: Throwable) {
@@ -59,5 +61,10 @@ class SignInPresenter: MvpPresenter<SignInView>(){
             })
             */
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        coroutineContext[Job]!!.cancel()
     }
 }

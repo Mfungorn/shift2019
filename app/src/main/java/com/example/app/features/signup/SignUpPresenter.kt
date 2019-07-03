@@ -10,12 +10,13 @@ import com.example.app.features.signup.api.SignUpApi
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 @InjectViewState
-class SignUpPresenter : MvpPresenter<SingUpView>() {
+class SignUpPresenter : MvpPresenter<SingUpView>(), CoroutineScope {
 
-    private val uiScope = CoroutineScope(Dispatchers.Main)
-    private val ioDispatcher : CoroutineDispatcher = Dispatchers.IO
+    override val coroutineContext: CoroutineContext =
+        Dispatchers.Main + SupervisorJob()
 
     @Inject
     lateinit var retrofit: Retrofit
@@ -37,15 +38,15 @@ class SignUpPresenter : MvpPresenter<SingUpView>() {
 
     fun createUser() {
         if (name.isNotBlank() && password.isNotBlank() && login.isNotBlank())
-            uiScope.launch(ioDispatcher) {
+            this.launch {
                 try {
-                    val response = withContext(ioDispatcher) {
+                    val response = withContext(Dispatchers.IO) {
                         api.createUser(UserSignUpPayload(login, name, password))
                     }.data
                     PreferencesApi.setUser(prefs, response)
                     viewState.onUserSignUp()
                 } catch (t: Throwable) {
-
+                    viewState.showMessage("Не удалось зарегистрировать пользователя")
                 }
             }
             /*
@@ -61,5 +62,10 @@ class SignUpPresenter : MvpPresenter<SingUpView>() {
 
             })
             */
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        coroutineContext[Job]!!.cancel()
     }
 }
