@@ -1,4 +1,4 @@
-package com.example.app.features.profile
+package com.example.app.core.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
 import com.example.app.core.model.User
 import kotlinx.android.synthetic.main.friends_list_item.view.*
-import kotlinx.android.synthetic.main.icon_list_item.view.*
 
 import java.util.ArrayList
 

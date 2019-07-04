@@ -12,7 +12,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.app.R
 import com.example.app.core.model.*
 import com.example.app.features.BaseFragment
-import com.example.app.features.events.IconAdapter
+import com.example.app.core.adapters.IconAdapter
 import kotlinx.android.synthetic.main.fragment_new_event.view.*
 
 class NewEventFragment : BaseFragment(), NewEventView {
@@ -32,11 +32,13 @@ class NewEventFragment : BaseFragment(), NewEventView {
         recyclerView = view.list_new_event_friends
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        adapter = IconAdapter(view.context, object : IconAdapter.SelectIconListener {
-            override fun onIconSelect(guest: Guest) {
+        adapter = IconAdapter(
+            view.context,
+            object : IconAdapter.SelectIconListener {
+                override fun onIconSelect(guest: Guest) {
 
-            }
-        })
+                }
+            })
         recyclerView.adapter = adapter
 
         createButton = view.button_new_event_create

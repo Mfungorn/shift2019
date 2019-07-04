@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.App
 import com.example.app.R
 import com.example.app.core.PreferencesApi
+import com.example.app.core.adapters.FriendAdapter
 import com.example.app.core.model.User
 import com.example.app.features.BaseFragment
 import com.example.app.features.MainFlowFragment
-import com.example.app.features.events.EventAdapter
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import javax.inject.Inject
@@ -28,12 +28,11 @@ class ProfileFragment : BaseFragment() {
     lateinit var prefs: SharedPreferences
 
     lateinit var user: User
-    lateinit var nameTextView: TextView
-    lateinit var nicknameView: TextView
-    lateinit var banquetsView: ConstraintLayout
-    lateinit var friendsAddView: ConstraintLayout
-    lateinit var logoutButton: Button
-    lateinit var friendsRecyclerView: RecyclerView
+    private lateinit var nameTextView: TextView
+    private lateinit var nicknameView: TextView
+    private lateinit var friendsAddView: ConstraintLayout
+    private lateinit var logoutButton: Button
+    private lateinit var friendsRecyclerView: RecyclerView
     lateinit var adapter: FriendAdapter
 
     init {
@@ -46,16 +45,17 @@ class ProfileFragment : BaseFragment() {
 
         nameTextView = view.name_text_view
         nicknameView = view.nickname_text_view
-        banquetsView = view.button_banquets
         friendsAddView = view.button_add_friends
         logoutButton = view.button_logout
         friendsRecyclerView = view.list_user_friends
         friendsRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = FriendAdapter(requireContext(), object : FriendAdapter.SelectFriendListener {
-            override fun onFriendSelect(user: User) {
+        adapter = FriendAdapter(
+            requireContext(),
+            object : FriendAdapter.SelectFriendListener {
+                override fun onFriendSelect(user: User) {
 
-            }
-        })
+                }
+            })
         friendsRecyclerView.adapter = adapter
 
 
@@ -69,15 +69,11 @@ class ProfileFragment : BaseFragment() {
             }
         }
 
-        banquetsView.setOnClickListener {
-            Toast.makeText(context, "banquets", Toast.LENGTH_SHORT).show()
-        }
-
         friendsAddView.setOnClickListener {
             Toast.makeText(context, "add friend", Toast.LENGTH_SHORT).show()
         }
 
-        view.button_edit.setOnClickListener {
+        view.button_profile_edit.setOnClickListener {
             Toast.makeText(context, "Эта функция пока недоступна", Toast.LENGTH_LONG).show()
         }
 

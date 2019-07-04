@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.app.R
+import com.example.app.core.adapters.EventAdapter
 import com.example.app.core.model.Event
 import com.example.app.features.BaseFragment
-import com.example.app.features.MainFlowFragment
-import com.example.app.features.events.EventAdapter.SelectEventListener
+import com.example.app.core.adapters.EventAdapter.SelectEventListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_events.view.*
 

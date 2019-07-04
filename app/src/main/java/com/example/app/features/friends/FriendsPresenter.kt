@@ -1,37 +1,36 @@
-package com.example.app.features.events
+package com.example.app.features.friends
 
-import android.content.SharedPreferences
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
-import com.example.app.features.events.api.EventsApi
+import com.example.app.features.friends.api.FriendsApi
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class EventsPresenter : MvpPresenter<EventsView>(), CoroutineScope {
+class FriendsPresenter : MvpPresenter<FriendsView>(), CoroutineScope {
     override val coroutineContext: CoroutineContext =
         Dispatchers.Main + SupervisorJob()
 
     @Inject
     lateinit var retrofit: Retrofit
 
-    private val api: EventsApi
+    private val api: FriendsApi
 
     init {
         App.INSTANCE.getAppComponent().inject(this)
-        api = retrofit.create(EventsApi::class.java)
+        api = retrofit.create(FriendsApi::class.java)
     }
 
-    fun getEvents() {
+    fun searchFriends(query: String) {
         this.launch {
             try {
-                val events = withContext(Dispatchers.IO){
-                    api.getEvents()
+                val results = withContext(Dispatchers.IO) {
+                    api.findFriends(query)
                 }.data
-                viewState.onEventsLoaded(events)
-            } catch (t : Throwable) {
-                viewState.showMessage("Не удалось загрузить мероприятия")
+                viewState.onSearchResultsLoaded(results)
+            } catch (t: Throwable) {
+                viewState.showMessage("Не удалось выполнить поиск")
             }
         }
     }

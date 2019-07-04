@@ -1,4 +1,4 @@
-package com.example.app.features.events
+package com.example.app.core.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
 import com.example.app.core.model.Event
 import com.example.app.core.model.Guest
-import com.example.app.core.model.User
 import kotlinx.android.synthetic.main.event_list_item.view.*
 
 import java.util.ArrayList
@@ -49,11 +48,13 @@ class EventAdapter(context: Context, private val selectEventListener: SelectEven
         private val eventPersonPrice: TextView = view.text_per_person_price
         private val iconList : RecyclerView = view.list_icons
 
-        private val adapter = IconAdapter(view.context, object : IconAdapter.SelectIconListener {
-            override fun onIconSelect(guest: Guest) {
+        private val adapter = IconAdapter(
+            view.context,
+            object : IconAdapter.SelectIconListener {
+                override fun onIconSelect(guest: Guest) {
 
-            }
-        })
+                }
+            })
 
         init {
             iconList.layoutManager = LinearLayoutManager(view.context,

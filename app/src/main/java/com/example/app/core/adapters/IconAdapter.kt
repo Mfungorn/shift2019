@@ -1,4 +1,4 @@
-package com.example.app.features.events
+package com.example.app.core.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,10 +8,7 @@ import android.widget.ImageView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
-import com.example.app.core.model.Event
 import com.example.app.core.model.Guest
-import com.example.app.core.model.User
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.icon_list_item.view.*
 
 import java.util.ArrayList

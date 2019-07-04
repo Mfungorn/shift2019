@@ -7,7 +7,6 @@ import com.example.app.core.model.Wrapper
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.POST
 
 interface EventsApi {
     @GET("/events")
