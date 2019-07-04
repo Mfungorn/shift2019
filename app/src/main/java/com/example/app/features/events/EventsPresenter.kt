@@ -4,9 +4,7 @@ import android.content.SharedPreferences
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.features.events.api.EventsApi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
@@ -18,9 +16,6 @@ class EventsPresenter : MvpPresenter<EventsView>(), CoroutineScope {
     @Inject
     lateinit var retrofit: Retrofit
 
-    @Inject
-    lateinit var prefs: SharedPreferences
-
     private val api: EventsApi
 
     init {
@@ -28,5 +23,16 @@ class EventsPresenter : MvpPresenter<EventsView>(), CoroutineScope {
         api = retrofit.create(EventsApi::class.java)
     }
 
-
+    fun getEvents() {
+        this.launch {
+            try {
+                val events = withContext(Dispatchers.IO){
+                    api.getEvents()
+                }.data
+                viewState.onEventsLoaded(events)
+            } catch (t : Throwable) {
+                viewState.showMessage("Не удалось загрузить мероприятия")
+            }
+        }
+    }
 }

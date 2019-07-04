@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
 import com.example.app.core.model.Event
+import com.example.app.core.model.Guest
 import com.example.app.core.model.User
 import kotlinx.android.synthetic.main.event_list_item.view.*
 
@@ -49,7 +50,7 @@ class EventAdapter(context: Context, private val selectEventListener: SelectEven
         private val iconList : RecyclerView = view.list_icons
 
         private val adapter = IconAdapter(view.context, object : IconAdapter.SelectIconListener {
-            override fun onIconSelect(user: User) {
+            override fun onIconSelect(guest: Guest) {
 
             }
         })
@@ -60,9 +61,9 @@ class EventAdapter(context: Context, private val selectEventListener: SelectEven
         }
 
         fun bind(event: Event) {
-            eventLocation.text = event.location
+            eventLocation.text = "${event.latitude} ${event.longitude}"
             eventDate.text = event.date
-            eventTotalPrice.text = event.price
+            eventTotalPrice.text = event
             eventPersonPrice.text = event.price / event.members.size
 
             adapter.setIcons(event.members)

@@ -3,6 +3,7 @@ package com.example.app.core;
 import com.example.app.core.modules.ApiModule;
 import com.example.app.core.modules.SharedPreferencesModule;
 import com.example.app.features.MainFlowFragment;
+import com.example.app.features.event_new.NewEventPresenter;
 import com.example.app.features.events.EventsPresenter;
 import com.example.app.features.profile.ProfileFragment;
 import dagger.Component;
@@ -25,5 +26,7 @@ public interface AppComponent {
     void inject(@NotNull ProfileFragment profileFragment);
 
     void inject(@NotNull EventsPresenter eventsPresenter);
+
+    void inject(@NotNull NewEventPresenter newEventPresenter);
 }
 

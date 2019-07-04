@@ -6,6 +6,7 @@ import android.view.*
 import com.example.app.App
 import com.example.app.R
 import com.example.app.core.PreferencesApi
+import com.example.app.features.events.EventsFragment
 import com.example.app.features.map.MapFragment
 import com.example.app.features.profile.ProfileFragment
 import kotlinx.android.synthetic.main.fragment_mainflow.view.*
@@ -29,8 +30,11 @@ class MainFlowFragment : BaseFragment() {
         (activity as MainActivity).setSupportActionBar(view.toolbar)
 
         childFragmentManager.beginTransaction()
-            .add(getContainerID(), MapFragment.newInstance(), "MAP")
+            .add(getContainerID(), EventsFragment.newInstance(), "EVENTS")
             .commit()
+//        childFragmentManager.beginTransaction()
+//            .add(getContainerID(), MapFragment.newInstance(), "MAP")
+//            .commit()
 //        childFragmentManager.beginTransaction()
 //            .add(getContainerID(), SignInFragment.newInstance(), "SIGNIN")
 //            .commit()

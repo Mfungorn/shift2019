@@ -6,15 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.app.App
 import com.example.app.R
 import com.example.app.core.PreferencesApi
 import com.example.app.core.model.User
 import com.example.app.features.BaseFragment
 import com.example.app.features.MainFlowFragment
+import com.example.app.features.events.EventAdapter
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import javax.inject.Inject
@@ -27,9 +30,11 @@ class ProfileFragment : BaseFragment() {
     lateinit var user: User
     lateinit var nameTextView: TextView
     lateinit var nicknameView: TextView
-    lateinit var nameEditText: EditText
-    lateinit var loginEditText: EditText
+    lateinit var banquetsView: ConstraintLayout
+    lateinit var friendsAddView: ConstraintLayout
     lateinit var logoutButton: Button
+    lateinit var friendsRecyclerView: RecyclerView
+    lateinit var adapter: FriendAdapter
 
     init {
         App.INSTANCE.getAppComponent().inject(this)
@@ -41,9 +46,18 @@ class ProfileFragment : BaseFragment() {
 
         nameTextView = view.name_text_view
         nicknameView = view.nickname_text_view
-        nameEditText = view.edit_profile_name
-        loginEditText = view.edit_profile_login
+        banquetsView = view.button_banquets
+        friendsAddView = view.button_add_friends
         logoutButton = view.button_logout
+        friendsRecyclerView = view.list_user_friends
+        friendsRecyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = FriendAdapter(requireContext(), object : FriendAdapter.SelectFriendListener {
+            override fun onFriendSelect(user: User) {
+
+            }
+        })
+        friendsRecyclerView.adapter = adapter
+
 
         logoutButton.setOnClickListener {
             run {
@@ -53,6 +67,14 @@ class ProfileFragment : BaseFragment() {
                     .replace(R.id.main_container, MainFlowFragment.newInstance(), "MAIN_FLOW_FRAGMENT")
                     .commit()
             }
+        }
+
+        banquetsView.setOnClickListener {
+            Toast.makeText(context, "banquets", Toast.LENGTH_SHORT).show()
+        }
+
+        friendsAddView.setOnClickListener {
+            Toast.makeText(context, "add friend", Toast.LENGTH_SHORT).show()
         }
 
         view.button_edit.setOnClickListener {
@@ -72,9 +94,7 @@ class ProfileFragment : BaseFragment() {
         nameTextView.text = user.name
         nicknameView.text = user.login
 
-        nameEditText.setText(user.name)
-        loginEditText.setText(user.login)
-
+        adapter.setFriends(user.friends)
     }
 
     override fun getLayoutID(): Int = R.layout.fragment_profile
