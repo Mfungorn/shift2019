@@ -2,6 +2,7 @@ package com.example.app.features
 
 import android.os.Bundle
 import com.example.app.R
+import com.example.app.features.signin.SignInFragment
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -9,7 +10,7 @@ class MainActivity : BaseActivity() {
         setContentView(getLayoutId())
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.main_container, MainFlowFragment.newInstance(), "MAIN_FRAGMENT_FLOW")
+            .add(getContainerId(), SignInFragment.newInstance(), "SIGNIN")
             .commit()
     }
 

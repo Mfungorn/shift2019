@@ -9,6 +9,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.app.R
 import com.example.app.core.DefaultTextWatcher
 import com.example.app.features.BaseFragment
+import com.example.app.features.MainFlowFragment
 import kotlinx.android.synthetic.main.fragment_signin.view.*
 import com.example.app.features.signup.SignUpFragment
 
@@ -39,8 +40,8 @@ class SignInFragment : BaseFragment(), SignInView {
         view.button_signup.setOnClickListener {
             activity!!.supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.main_container, SignUpFragment.newInstance(), "SignUpFragment")
-                .addToBackStack(null)
+                .replace(R.id.main_container, SignUpFragment.newInstance(), "SIGNUP")
+                .addToBackStack("SIGNUP")
                 .commit()
         }
 
@@ -53,7 +54,9 @@ class SignInFragment : BaseFragment(), SignInView {
 
     override fun onUserAuthenticate() {
         //Toast.makeText(context, "Auth done", Toast.LENGTH_SHORT).show()
-        activity!!.supportFragmentManager.popBackStack()
+        activity!!.supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, MainFlowFragment.newInstance(), "MAIN_FRAGMENT_FLOW")
+            .commit()
     }
 
 

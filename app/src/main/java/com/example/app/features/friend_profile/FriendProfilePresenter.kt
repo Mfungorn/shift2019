@@ -27,10 +27,23 @@ class FriendProfilePresenter : MvpPresenter<FriendProfileView>(), CoroutineScope
         this.launch {
             try {
                 withContext(Dispatchers.IO) {
-                    api.addFriend(user.id)
+                    api.addFriend(user.login)
                 }
             } catch (t: Throwable) {
                 viewState.showMessage("Не удалось добавить в друзья")
+            }
+        }
+    }
+
+    fun getProfileEvents(user: User) {
+        this.launch {
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    api.getProfileEvents(user.login)
+                }.data
+                viewState.onEventsLoaded(result)
+            } catch (t: Throwable) {
+                viewState.showMessage("Не удалось получить мероприятия пользователя")
             }
         }
     }

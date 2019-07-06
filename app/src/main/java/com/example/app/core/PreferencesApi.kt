@@ -15,7 +15,7 @@ class PreferencesApi {
             val gson = Gson()
             val jsonRoot = JSONObject(prefs.getString(Companion.PrefNames.USER.name, null))
 
-            return gson.fromJson(jsonRoot.toString(), User::class.java)._id
+            return gson.fromJson(jsonRoot.toString(), User::class.java).login
         }
 
         fun setUser(prefs: SharedPreferences, user: User) {

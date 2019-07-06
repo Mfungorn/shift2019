@@ -1,9 +1,8 @@
 package com.example.app.core.model
 
 class User (
-    val id: Long,
     val login: String,
-    val name: String,
+    val username: String,
     var icon: String,
     val email: String,
     var phone: String,

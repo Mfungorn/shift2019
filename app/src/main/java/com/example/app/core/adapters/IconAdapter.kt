@@ -8,7 +8,7 @@ import android.widget.ImageView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
-import com.example.app.core.model.Guest
+import com.example.app.core.model.User
 import kotlinx.android.synthetic.main.icon_list_item.view.*
 
 import java.util.ArrayList
@@ -16,7 +16,7 @@ import java.util.ArrayList
 class IconAdapter(context: Context, private val selectIconListener: SelectIconListener) :
     RecyclerView.Adapter<IconAdapter.IconHolder>() {
 
-    private val icons = ArrayList<Guest>()
+    private val icons = ArrayList<User>()
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getItemCount() = icons.size
@@ -31,7 +31,7 @@ class IconAdapter(context: Context, private val selectIconListener: SelectIconLi
         holder.bind(icons[position])
     }
 
-    fun setIcons(list: List<Guest>) {
+    fun setIcons(list: List<User>) {
         icons.clear()
         icons.addAll(list)
         notifyDataSetChanged()
@@ -42,17 +42,17 @@ class IconAdapter(context: Context, private val selectIconListener: SelectIconLi
 
         private val icon: ImageView = view.user_icon
 
-        fun bind(guest: Guest) {
+        fun bind(user: User) {
             //if (!user.profileIcon.isEmpty)
             //    Picasso.get().load(user.profileIcon).into(icon)
 
-            itemView.setOnClickListener { selectIconListener.onIconSelect(guest) }
+            itemView.setOnClickListener { selectIconListener.onIconSelect(user) }
         }
 
     }
 
     interface SelectIconListener {
-        fun onIconSelect(guest: Guest)
+        fun onIconSelect(user: User)
     }
 
 }

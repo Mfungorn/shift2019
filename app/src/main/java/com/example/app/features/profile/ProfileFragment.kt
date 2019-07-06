@@ -18,6 +18,8 @@ import com.example.app.core.adapters.FriendAdapter
 import com.example.app.core.model.User
 import com.example.app.features.BaseFragment
 import com.example.app.features.MainFlowFragment
+import com.example.app.features.friends.FriendsFragment
+import com.example.app.features.signin.SignInFragment
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import javax.inject.Inject
@@ -64,13 +66,17 @@ class ProfileFragment : BaseFragment() {
                 PreferencesApi.delData(prefs)
                 activity!!.supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.main_container, MainFlowFragment.newInstance(), "MAIN_FLOW_FRAGMENT")
+                    .replace(R.id.main_container, SignInFragment.newInstance(), "SIGNIN")
                     .commit()
             }
         }
 
         friendsAddView.setOnClickListener {
             Toast.makeText(context, "add friend", Toast.LENGTH_SHORT).show()
+            parentFragment!!.childFragmentManager.beginTransaction()
+                .add(R.id.flow_container, FriendsFragment.newInstance(user), "FRIENDS")
+                .addToBackStack("FRIENDS")
+                .commit()
         }
 
         view.button_profile_edit.setOnClickListener {
@@ -87,7 +93,7 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun showUser() {
-        nameTextView.text = user.name
+        nameTextView.text = user.username
         nicknameView.text = user.login
 
         adapter.setFriends(user.friends)

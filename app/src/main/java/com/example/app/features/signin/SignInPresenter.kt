@@ -6,6 +6,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.core.PreferencesApi
 import com.example.app.core.model.UserSignInPayload
+import com.example.app.core.model.Wrapper
 import com.example.app.features.signin.api.SignInApi
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
@@ -39,7 +40,7 @@ class SignInPresenter: MvpPresenter<SignInView>(), CoroutineScope {
             this.launch {
                 try {
                     val response = withContext(Dispatchers.IO) {
-                        api.authUser(UserSignInPayload(login, password))
+                        api.authUser(Wrapper("OK", UserSignInPayload(login, password)))
                     }.data
                     PreferencesApi.setUser(prefs, response)
                     viewState.onUserAuthenticate()

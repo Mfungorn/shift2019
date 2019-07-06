@@ -39,6 +39,18 @@ class SignUpFragment : BaseFragment(), SingUpView {
             }
         })
 
+        v.edit_signup_email.addTextChangedListener(object : DefaultTextWatcher() {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                presenter.email = s!!.toString()
+            }
+        })
+
+        v.edit_signup_phone.addTextChangedListener(object : DefaultTextWatcher() {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                presenter.phone = s!!.toString()
+            }
+        })
+
         v.reguser_button.setOnClickListener {
             run {
                 presenter.createUser()
@@ -55,8 +67,7 @@ class SignUpFragment : BaseFragment(), SingUpView {
     }
 
     override fun onUserSignUp() {
-        activity!!.supportFragmentManager
-            .beginTransaction()
+        activity!!.supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, MainFlowFragment.newInstance(), "MAIN_FLOW_FRAGMENT")
             .commit()
     }

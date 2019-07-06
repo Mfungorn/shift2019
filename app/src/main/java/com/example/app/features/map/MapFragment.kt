@@ -26,7 +26,8 @@ import com.example.app.features.MainActivity
 import java.util.*
 
 
-class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
+class MapFragment(var latitude: Double = 0.0, var longitude: Double = 0.0)
+    : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener,
     GoogleMap.OnMyLocationButtonClickListener,
@@ -38,8 +39,6 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
 
     lateinit var mMapView: MapView
     private lateinit var googleMap: GoogleMap
-    private var longitude: Double = 0.0
-    private var latitude: Double = 0.0
     private var init = false
 
     private lateinit var googleApiClient: GoogleApiClient
@@ -221,7 +220,7 @@ class MapFragment : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     }
 
     companion object {
-        fun newInstance() = MapFragment()
+        fun newInstance(latitude: Double, longitude: Double) = MapFragment(latitude, longitude)
     }
 
 }

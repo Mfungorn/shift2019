@@ -6,6 +6,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.core.PreferencesApi
 import com.example.app.core.model.UserSignUpPayload
+import com.example.app.core.model.Wrapper
 import com.example.app.features.signup.api.SignUpApi
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
@@ -24,7 +25,6 @@ class SignUpPresenter : MvpPresenter<SingUpView>(), CoroutineScope {
     @Inject
     lateinit var prefs: SharedPreferences
 
-
     private val api: SignUpApi
 
     init {
@@ -35,13 +35,15 @@ class SignUpPresenter : MvpPresenter<SingUpView>(), CoroutineScope {
     var name = ""
     var password = ""
     var login = ""
+    var email = ""
+    var phone = ""
 
     fun createUser() {
         if (name.isNotBlank() && password.isNotBlank() && login.isNotBlank())
             this.launch {
                 try {
                     val response = withContext(Dispatchers.IO) {
-                        api.createUser(UserSignUpPayload(login, name, password))
+                        api.createUser(Wrapper("OK", UserSignUpPayload(login, name, password, email, phone)))
                     }.data
                     PreferencesApi.setUser(prefs, response)
                     viewState.onUserSignUp()

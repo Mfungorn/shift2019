@@ -40,7 +40,7 @@ class BottomNavigationDrawerFragment(var expenses: ArrayList<Expense>) : MvpBott
     }
 
     fun addCarryToNavigationDrawer(expense: Expense) {
-        navigationView.menu.add("$expense.title: $expense.price ${getString(R.string.currency)}")
+        navigationView.menu.add("${expense.name}: ${expense.cost} ${getString(R.string.currency)}")
         expenses.add(expense)
     }
 

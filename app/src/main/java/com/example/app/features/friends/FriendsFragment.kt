@@ -12,6 +12,7 @@ import com.example.app.R
 import com.example.app.core.adapters.FriendAdapter
 import com.example.app.core.model.User
 import com.example.app.features.BaseFragment
+import com.example.app.features.friend_profile.FriendProfileFragment
 import kotlinx.android.synthetic.main.fragment_friends.view.*
 
 class FriendsFragment(val user: User) : BaseFragment(), FriendsView {
@@ -29,7 +30,7 @@ class FriendsFragment(val user: User) : BaseFragment(), FriendsView {
         val view = inflater.inflate(getLayoutID(), container, false)
 
         view.button_friends_search.setOnClickListener {
-            onSearchStarted()
+            onSearchStarted(view.edit_search_friends.text.toString())
         }
 
         userFriendsRecyclerView = view.list_friends_user_results
@@ -39,15 +40,23 @@ class FriendsFragment(val user: User) : BaseFragment(), FriendsView {
 
         userFriendsAdapter = FriendAdapter(view.context, object : FriendAdapter.SelectFriendListener {
             override fun onFriendSelect(user: User) {
-
+                parentFragment!!.childFragmentManager.beginTransaction()
+                    .add(R.id.flow_container, FriendProfileFragment.newInstance(user), "FRIEND_PROFILE")
+                    .addToBackStack("FRIEND_PROFILE")
+                    .commit()
             }
         })
 
         resultsAdapter = FriendAdapter(view.context, object : FriendAdapter.SelectFriendListener {
             override fun onFriendSelect(user: User) {
-
+                parentFragment!!.childFragmentManager.beginTransaction()
+                    .add(R.id.flow_container, FriendProfileFragment.newInstance(user), "FRIEND_PROFILE")
+                    .addToBackStack("FRIEND_PROFILE")
+                    .commit()
             }
         })
+
+        userFriendsAdapter.setFriends(user.friends)
 
         userFriendsRecyclerView.adapter = userFriendsAdapter
         resultsRecyclerView.adapter = resultsAdapter
@@ -57,7 +66,7 @@ class FriendsFragment(val user: User) : BaseFragment(), FriendsView {
 
     override fun onSearchStarted(query: String) {
         userFriendsAdapter.setFriends(user.friends.filter {
-            it.name.startsWith(query) || it.login.startsWith(query)
+            it.username.startsWith(query) || it.login.startsWith(query)
         })
         presenter.searchFriends(query)
     }

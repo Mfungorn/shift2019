@@ -16,9 +16,6 @@ import javax.inject.Inject
 
 class MainFlowFragment : BaseFragment() {
 
-    @Inject
-    lateinit var prefs: SharedPreferences
-
     init {
         App.INSTANCE.getAppComponent().inject(this)
     }
@@ -27,53 +24,13 @@ class MainFlowFragment : BaseFragment() {
         val view = inflater.inflate(getLayoutID(), container, false)
         setHasOptionsMenu(true)
 
-        (activity as MainActivity).setSupportActionBar(view.toolbar)
-
+//        childFragmentManager.beginTransaction()
+//            .add(getContainerID(), EventsFragment.newInstance(), "EVENTS")
+//            .commit()
         childFragmentManager.beginTransaction()
             .add(getContainerID(), EventsFragment.newInstance(), "EVENTS")
             .commit()
-//        childFragmentManager.beginTransaction()
-//            .add(getContainerID(), MapFragment.newInstance(), "MAP")
-//            .commit()
-//        childFragmentManager.beginTransaction()
-//            .add(getContainerID(), SignInFragment.newInstance(), "SIGNIN")
-//            .commit()
         return view
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.app_bar_profile -> {
-                val user = PreferencesApi.getUser(prefs)
-                if (user == null) {
-                    activity!!.supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.main_container, SignInFragment.newInstance(), "SIGNIN")
-                        .addToBackStack(null)
-                        .commit()
-                } else {
-                    activity!!.supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.main_container, ProfileFragment.newInstance(user), "PROFILE")
-                        .addToBackStack(null)
-                        .commit()
-                }
-            }
-            R.id.app_bar_search -> {
-
-            }
-
-            android.R.id.home -> {
-
-            }
-        }
-        return true
     }
 
     override fun getLayoutID(): Int = R.layout.fragment_mainflow
