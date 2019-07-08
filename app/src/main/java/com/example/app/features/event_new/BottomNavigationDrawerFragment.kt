@@ -1,22 +1,27 @@
 package com.example.app.features.event_new
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageButton
+import androidx.appcompat.app.AlertDialog
 import com.example.app.R
 import com.example.app.core.MvpBottomSheetDialogFragment
 import com.example.app.core.model.Expense
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
+import kotlinx.android.synthetic.main.dialog_add_expense.view.*
 import kotlinx.android.synthetic.main.fragment_bottom_navigation_drawer.*
 import kotlinx.android.synthetic.main.fragment_bottom_navigation_drawer.view.*
 
-class BottomNavigationDrawerFragment(var expenses: ArrayList<Expense>) : MvpBottomSheetDialogFragment(), NavigationView.OnNavigationItemSelectedListener {
+class BottomNavigationDrawerFragment(var expenses: ArrayList<Expense>) : MvpBottomSheetDialogFragment(),
+    NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var navigationView: NavigationView
 
@@ -25,6 +30,30 @@ class BottomNavigationDrawerFragment(var expenses: ArrayList<Expense>) : MvpBott
 
         navigationView = view.navigation_view
         navigationView.setNavigationItemSelectedListener(this)
+
+        view.button_add_new_expense.setOnClickListener {
+            val dialogView = layoutInflater.inflate(R.layout.dialog_add_expense, null)
+            val alertDialog = AlertDialog.Builder(view.context).create()
+            alertDialog.setTitle("Adding new expense")
+            alertDialog.setCancelable(true)
+
+            val nameEditText = dialogView.edit_add_expense_name
+            val costEditText = dialogView.edit_add_expense_cost
+
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Add") { _: DialogInterface, _: Int ->
+                addCarryToNavigationDrawer(
+                    Expense(nameEditText.text.toString(), costEditText.text.toString().toDouble())
+                )
+                alertDialog.dismiss()
+            }
+
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel") { _: DialogInterface, _: Int ->
+                alertDialog.dismiss()
+            }
+
+            alertDialog.setView(dialogView)
+            alertDialog.show()
+        }
 
         return view
     }
@@ -76,7 +105,6 @@ class BottomNavigationDrawerFragment(var expenses: ArrayList<Expense>) : MvpBott
                 }
             })
         }
-
         return dialog
     }
 
