@@ -48,7 +48,7 @@ class ProfileFragment : BaseFragment() {
         nameTextView = view.name_text_view
         nicknameView = view.nickname_text_view
         friendsAddView = view.button_add_friends
-        logoutButton = view.button_logout
+        logoutButton = view.button_logout!!
         friendsRecyclerView = view.list_user_friends
         friendsRecyclerView.layoutManager = LinearLayoutManager(context)
         adapter = FriendAdapter(

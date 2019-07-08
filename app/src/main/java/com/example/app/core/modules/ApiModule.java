@@ -1,5 +1,6 @@
 package com.example.app.core.modules;
 
+import com.example.app.core.BasicAuthInterceptor;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
@@ -11,7 +12,7 @@ import javax.inject.Singleton;
 
 @Module
 public class ApiModule {
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "http://127.0.0.1:8080/";
 
     public ApiModule() {
     }
@@ -32,6 +33,9 @@ public class ApiModule {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
+        BasicAuthInterceptor authInterceptor = new BasicAuthInterceptor();
+
+        builder.addInterceptor(authInterceptor);
         builder.addInterceptor(logInterceptor);
 
         return builder.build();
