@@ -13,10 +13,10 @@ import com.example.app.core.adapters.EventAdapter
 import com.example.app.core.model.Event
 import com.example.app.core.model.User
 import com.example.app.features.BaseFragment
-import com.example.app.features.friends.FriendsFragment
+import com.example.app.features.NavigationManagerChildFragment
 import kotlinx.android.synthetic.main.fragment_friend_profile.view.*
 
-class FriendProfileFragment(private val friend : User) : BaseFragment(), FriendProfileView {
+class FriendProfileFragment(private val friend : User) : BaseFragment(), FriendProfileView, NavigationManagerChildFragment {
 
     @InjectPresenter
     lateinit var presenter: FriendProfilePresenter
@@ -28,10 +28,7 @@ class FriendProfileFragment(private val friend : User) : BaseFragment(), FriendP
         val view = inflater.inflate(getLayoutID(), container, false)
 
         view.button_friend_friends.setOnClickListener {
-            parentFragment!!.childFragmentManager.beginTransaction()
-                .add(R.id.flow_container, FriendsFragment.newInstance(friend), "FRIEND_FRIENDS")
-                .addToBackStack("FRIEND_FRIENDS")
-                .commit()
+            parent.showUserFriendsFragment(friend)
         }
 
         eventsRecyclerView = view.list_friend_profie_events

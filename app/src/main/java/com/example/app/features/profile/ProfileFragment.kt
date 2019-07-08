@@ -17,14 +17,13 @@ import com.example.app.core.PreferencesApi
 import com.example.app.core.adapters.FriendAdapter
 import com.example.app.core.model.User
 import com.example.app.features.BaseFragment
-import com.example.app.features.MainFlowFragment
-import com.example.app.features.friends.FriendsFragment
+import com.example.app.features.NavigationManagerChildFragment
 import com.example.app.features.signin.SignInFragment
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import javax.inject.Inject
 
-class ProfileFragment : BaseFragment() {
+class ProfileFragment : BaseFragment(), NavigationManagerChildFragment {
 
     @Inject
     lateinit var prefs: SharedPreferences
@@ -73,10 +72,7 @@ class ProfileFragment : BaseFragment() {
 
         friendsAddView.setOnClickListener {
             Toast.makeText(context, "add friend", Toast.LENGTH_SHORT).show()
-            parentFragment!!.childFragmentManager.beginTransaction()
-                .add(R.id.flow_container, FriendsFragment.newInstance(user), "FRIENDS")
-                .addToBackStack("FRIENDS")
-                .commit()
+            parent.showUserFriendsFragment(user)
         }
 
         view.button_profile_edit.setOnClickListener {

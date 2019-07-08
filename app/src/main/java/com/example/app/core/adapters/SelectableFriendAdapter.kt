@@ -60,6 +60,8 @@ class SelectableFriendAdapter(context: Context, private val listener: SelectFrie
             phonenumber.text = user.phone
             if (selectedFriends.contains(user))
                 itemView.setBackgroundColor(0x32D81B60)
+            else
+                itemView.setBackgroundColor(0xFFFFFF)
 
             itemView.setOnClickListener { selectFriendListener.onFriendSelect(user) }
         }

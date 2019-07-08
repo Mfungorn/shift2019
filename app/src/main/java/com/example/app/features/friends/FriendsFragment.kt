@@ -12,10 +12,10 @@ import com.example.app.R
 import com.example.app.core.adapters.FriendAdapter
 import com.example.app.core.model.User
 import com.example.app.features.BaseFragment
-import com.example.app.features.friend_profile.FriendProfileFragment
+import com.example.app.features.NavigationManagerChildFragment
 import kotlinx.android.synthetic.main.fragment_friends.view.*
 
-class FriendsFragment(val user: User) : BaseFragment(), FriendsView {
+class FriendsFragment(val user: User) : BaseFragment(), FriendsView, NavigationManagerChildFragment {
 
     @InjectPresenter
     lateinit var presenter: FriendsPresenter
@@ -40,19 +40,13 @@ class FriendsFragment(val user: User) : BaseFragment(), FriendsView {
 
         userFriendsAdapter = FriendAdapter(view.context, object : FriendAdapter.SelectFriendListener {
             override fun onFriendSelect(user: User) {
-                parentFragment!!.childFragmentManager.beginTransaction()
-                    .add(R.id.flow_container, FriendProfileFragment.newInstance(user), "FRIEND_PROFILE")
-                    .addToBackStack("FRIEND_PROFILE")
-                    .commit()
+                parent.showFriendProfileFragment(user)
             }
         })
 
         resultsAdapter = FriendAdapter(view.context, object : FriendAdapter.SelectFriendListener {
             override fun onFriendSelect(user: User) {
-                parentFragment!!.childFragmentManager.beginTransaction()
-                    .add(R.id.flow_container, FriendProfileFragment.newInstance(user), "FRIEND_PROFILE")
-                    .addToBackStack("FRIEND_PROFILE")
-                    .commit()
+                parent.showFriendProfileFragment(user)
             }
         })
 

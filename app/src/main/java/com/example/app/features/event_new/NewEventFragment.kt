@@ -15,15 +15,14 @@ import com.example.app.core.DefaultTextWatcher
 import com.example.app.core.model.*
 import com.example.app.features.BaseFragment
 import com.example.app.core.adapters.IconAdapter
-import com.example.app.features.friend_profile.FriendProfileFragment
-import com.example.app.features.friends_select.FriendsSelectFragment
 import kotlinx.android.synthetic.main.fragment_new_event.view.*
 import java.util.*
 import android.text.format.DateUtils
+import com.example.app.features.NavigationManagerChildFragment
 import com.example.app.features.map.MapFragment
 
 
-class NewEventFragment : BaseFragment(), NewEventView {
+class NewEventFragment : BaseFragment(), NewEventView, NavigationManagerChildFragment {
 
     @InjectPresenter
     lateinit var presenter: NewEventPresenter
@@ -41,10 +40,7 @@ class NewEventFragment : BaseFragment(), NewEventView {
             view.context,
             object : IconAdapter.SelectIconListener {
                 override fun onIconSelect(user: User) {
-                    parentFragment!!.childFragmentManager.beginTransaction()
-                        .add(R.id.flow_container, FriendProfileFragment.newInstance(user), "FRIEND_PROFILE")
-                        .addToBackStack("FRIEND_PROFILE")
-                        .commit()
+                    parent.showFriendProfileFragment(user)
                 }
             })
         recyclerView.adapter = adapter
@@ -94,10 +90,7 @@ class NewEventFragment : BaseFragment(), NewEventView {
         }
 
         view.fab_new_event_add_friend.setOnClickListener {
-            parentFragment!!.childFragmentManager.beginTransaction()
-                .add(R.id.flow_container, FriendsSelectFragment.newInstance(presenter.event.members), "SELECT_FRIENDS")
-                .addToBackStack("SELECT_FRIENDS")
-                .commit()
+            parent.showFriendsSelectFragment(presenter.event.members)
         }
 
         view.fab_add_carry.setOnClickListener {
