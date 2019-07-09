@@ -11,22 +11,22 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.app.R
 import com.example.app.features.BaseFragment
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.GeoApiContext
-import com.google.maps.android.PolyUtil
-import com.google.maps.model.DirectionsResult
 import kotlinx.android.synthetic.main.fragment_map.view.*
-import com.example.app.R
-import com.example.app.features.MainActivity
 import java.util.*
 
 
-class MapFragment(var latitude: Double = 0.0, var longitude: Double = 0.0)
+class MapFragment(private var latitude: Double = 0.0, private var longitude: Double = 0.0)
     : BaseFragment(), MapFragmentView, OnMapReadyCallback,
     GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener,
@@ -37,7 +37,7 @@ class MapFragment(var latitude: Double = 0.0, var longitude: Double = 0.0)
     GoogleMap.OnMapLongClickListener,
     GoogleMap.OnMarkerClickListener {
 
-    lateinit var mMapView: MapView
+    private lateinit var mMapView: MapView
     private lateinit var googleMap: GoogleMap
     private var init = false
 
@@ -73,7 +73,7 @@ class MapFragment(var latitude: Double = 0.0, var longitude: Double = 0.0)
         return rootView
     }
 
-    private fun getCity() {
+    fun getCity() : String {
         val gcd = Geocoder(context, Locale.getDefault())
         val addresses = gcd.getFromLocation(latitude, longitude, 1)
         if (addresses.size > 0) {
@@ -81,6 +81,7 @@ class MapFragment(var latitude: Double = 0.0, var longitude: Double = 0.0)
                 init = true
             }
         }
+        return addresses[0].featureName
     }
 
     override fun getLayoutID() = R.layout.fragment_map

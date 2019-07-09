@@ -10,7 +10,6 @@ import com.example.app.R
 import com.example.app.core.DefaultTextWatcher
 import com.example.app.features.BaseFragment
 import com.example.app.features.MainFlowFragment
-import kotlinx.android.synthetic.main.fragment_signin.view.*
 import kotlinx.android.synthetic.main.fragment_signup.view.*
 
 class SignUpFragment : BaseFragment(), SingUpView {

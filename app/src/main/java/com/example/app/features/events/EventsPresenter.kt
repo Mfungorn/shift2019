@@ -1,6 +1,5 @@
 package com.example.app.features.events
 
-import android.content.SharedPreferences
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.features.events.api.EventsApi

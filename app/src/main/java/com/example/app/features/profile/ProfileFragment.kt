@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.App
 import com.example.app.R
 import com.example.app.core.PreferencesApi
-import com.example.app.core.adapters.FriendAdapter
+import com.example.app.core.adapters.EventAdapter
+import com.example.app.core.model.Event
 import com.example.app.core.model.User
 import com.example.app.features.BaseFragment
 import com.example.app.features.NavigationManagerChildFragment
@@ -33,8 +34,8 @@ class ProfileFragment : BaseFragment(), NavigationManagerChildFragment {
     private lateinit var nicknameView: TextView
     private lateinit var friendsAddView: ConstraintLayout
     private lateinit var logoutButton: Button
-    private lateinit var friendsRecyclerView: RecyclerView
-    lateinit var adapter: FriendAdapter
+    private lateinit var eventsRecyclerView: RecyclerView
+    lateinit var adapter: EventAdapter
 
     init {
         App.INSTANCE.getAppComponent().inject(this)
@@ -48,16 +49,17 @@ class ProfileFragment : BaseFragment(), NavigationManagerChildFragment {
         nicknameView = view.nickname_text_view
         friendsAddView = view.button_add_friends
         logoutButton = view.button_logout!!
-        friendsRecyclerView = view.list_user_friends
-        friendsRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = FriendAdapter(
-            requireContext(),
-            object : FriendAdapter.SelectFriendListener {
-                override fun onFriendSelect(user: User) {
-
+        eventsRecyclerView = view.list_user_events
+        eventsRecyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = EventAdapter(
+            view.context,
+            object : EventAdapter.SelectEventListener {
+                override fun onEventSelect(event: Event) {
+                    parent.showEventFragment(event.id)
                 }
-            })
-        friendsRecyclerView.adapter = adapter
+            }
+        )
+        eventsRecyclerView.adapter = adapter
 
 
         logoutButton.setOnClickListener {
@@ -92,7 +94,7 @@ class ProfileFragment : BaseFragment(), NavigationManagerChildFragment {
         nameTextView.text = user.username
         nicknameView.text = user.login
 
-        adapter.setFriends(user.friends)
+        adapter.setEvents(user.events) // Ивенты, которе пользователь организовал
     }
 
     override fun getLayoutID(): Int = R.layout.fragment_profile

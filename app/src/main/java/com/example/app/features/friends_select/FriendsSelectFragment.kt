@@ -16,14 +16,14 @@ import com.example.app.features.BaseFragment
 import kotlinx.android.synthetic.main.fragment_friends_select.view.*
 import javax.inject.Inject
 
-class FriendsSelectFragment(private var selectedFriendsList: ArrayList<User>) : BaseFragment(), FriendsSelectView {
+class FriendsSelectFragment(private var selectedFriendsList: List<User>) : BaseFragment(), FriendsSelectView {
     @Inject
     lateinit var prefs: SharedPreferences
 
     @InjectPresenter
     lateinit var selectPresenter: FriendsSelectPresenter
 
-    lateinit var friendsRecyclerView: RecyclerView
+    private lateinit var friendsRecyclerView: RecyclerView
     lateinit var adapter: SelectableFriendAdapter
 
     var user: User = PreferencesApi.getUser(prefs)!!
@@ -58,7 +58,7 @@ class FriendsSelectFragment(private var selectedFriendsList: ArrayList<User>) : 
     override fun getLayoutID() = R.layout.fragment_friends_select
 
     companion object {
-        fun newInstance(selectedFriendsList: ArrayList<User>): FriendsSelectFragment {
+        fun newInstance(selectedFriendsList: List<User>): FriendsSelectFragment {
             return FriendsSelectFragment(selectedFriendsList)
         }
     }

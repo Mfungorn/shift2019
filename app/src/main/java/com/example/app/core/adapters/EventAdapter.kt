@@ -1,6 +1,8 @@
 package com.example.app.core.adapters
 
+import android.annotation.TargetApi
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
 import com.example.app.core.model.Event
 import com.example.app.core.model.Guest
+import com.example.app.core.model.User
 import kotlinx.android.synthetic.main.event_list_item.view.*
-
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EventAdapter(context: Context, private val selectEventListener: SelectEventListener) :
     RecyclerView.Adapter<EventAdapter.EventHolder>() {
@@ -51,7 +54,7 @@ class EventAdapter(context: Context, private val selectEventListener: SelectEven
         private val adapter = IconAdapter(
             view.context,
             object : IconAdapter.SelectIconListener {
-                override fun onIconSelect(guest: Guest) {
+                override fun onIconSelect(user: User) {
 
                 }
             })
@@ -61,13 +64,15 @@ class EventAdapter(context: Context, private val selectEventListener: SelectEven
                 LinearLayoutManager.HORIZONTAL, false)
         }
 
+        @TargetApi(Build.VERSION_CODES.N)
         fun bind(event: Event) {
             eventLocation.text = "${event.latitude} ${event.longitude}"
-            eventDate.text = event.date
-            eventTotalPrice.text = event
-            eventPersonPrice.text = event.price / event.members.size
+            eventDate.text = SimpleDateFormat("dd MMM, yyyy", Locale.ENGLISH).format(event.date)
+            val total = event.expenses.stream().mapToDouble {expense -> expense.cost }.sum()
+            eventTotalPrice.text = total.toString()
+            eventPersonPrice.text = String.format("%.2f", (total / event.members.size))
 
-            adapter.setIcons(event.members)
+            adapter.setIcons(event.members.map { guest -> guest.user })
             iconList.adapter = adapter
 
             itemView.setOnClickListener { selectEventListener.onEventSelect(event) }

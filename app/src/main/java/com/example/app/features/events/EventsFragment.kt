@@ -51,7 +51,7 @@ class EventsFragment : BaseFragment(), EventsView, NavigationManagerChildFragmen
 
         adapter = EventAdapter(requireContext(), object : SelectEventListener {
             override fun onEventSelect(event: Event) {
-
+                parent.showEventFragment(event.id)
             }
         })
         recyclerView.adapter = adapter

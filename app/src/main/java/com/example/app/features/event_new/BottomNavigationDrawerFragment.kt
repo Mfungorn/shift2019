@@ -8,22 +8,22 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import com.example.app.R
 import com.example.app.core.MvpBottomSheetDialogFragment
 import com.example.app.core.model.Expense
+import com.example.app.features.event.BottomNavigationDrawerFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.dialog_add_expense.view.*
-import kotlinx.android.synthetic.main.fragment_bottom_navigation_drawer.*
-import kotlinx.android.synthetic.main.fragment_bottom_navigation_drawer.view.*
+import kotlinx.android.synthetic.main.fragment_new_event_bottom_navigation_drawer.*
+import kotlinx.android.synthetic.main.fragment_new_event_bottom_navigation_drawer.view.*
 
-class BottomNavigationDrawerFragment(var expenses: ArrayList<Expense>) : MvpBottomSheetDialogFragment(),
+class BottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) : MvpBottomSheetDialogFragment(),
     NavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var navigationView: NavigationView
+    private lateinit var navigationView: NavigationView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(getLayoutID(), container, false)
@@ -58,7 +58,7 @@ class BottomNavigationDrawerFragment(var expenses: ArrayList<Expense>) : MvpBott
         return view
     }
 
-    private fun getLayoutID(): Int = R.layout.fragment_bottom_navigation_drawer
+    private fun getLayoutID(): Int = R.layout.fragment_new_event_bottom_navigation_drawer
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -68,7 +68,7 @@ class BottomNavigationDrawerFragment(var expenses: ArrayList<Expense>) : MvpBott
         }
     }
 
-    fun addCarryToNavigationDrawer(expense: Expense) {
+    private fun addCarryToNavigationDrawer(expense: Expense) {
         navigationView.menu.add("${expense.name}: ${expense.cost} ${getString(R.string.currency)}")
         expenses.add(expense)
     }

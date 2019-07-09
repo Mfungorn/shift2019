@@ -48,7 +48,7 @@ class FriendAdapter(context: Context, private val listener: SelectFriendListener
         fun bind(user: User) {
             //if (!user.profileIcon.isEmpty)
             //    Picasso.get().load(user.profileIcon).into(icon)
-            name.text = user.name
+            name.text = user.username
             phonenumber.text = user.phone
 
             itemView.setOnClickListener { selectFriendListener.onFriendSelect(user) }

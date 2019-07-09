@@ -35,7 +35,7 @@ class NewEventPresenter : MvpPresenter<NewEventView>(), CoroutineScope {
         .0,
         currentTime.time,
         ArrayList<User>(),
-        ArrayList<Expense>())
+        ArrayList())
 
     init {
         App.INSTANCE.getAppComponent().inject(this)

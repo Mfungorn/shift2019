@@ -10,10 +10,8 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
 import com.example.app.core.model.User
-import kotlinx.android.synthetic.main.friends_list_item.view.*
 import kotlinx.android.synthetic.main.selectable_friends_list_item.view.*
-
-import java.util.ArrayList
+import java.util.*
 
 class SelectableFriendAdapter(context: Context, private val listener: SelectFriendListener) :
     RecyclerView.Adapter<SelectableFriendAdapter.SelectedFriendHolder>() {

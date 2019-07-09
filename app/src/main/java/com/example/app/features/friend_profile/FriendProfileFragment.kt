@@ -21,7 +21,7 @@ class FriendProfileFragment(private val friend : User) : BaseFragment(), FriendP
     @InjectPresenter
     lateinit var presenter: FriendProfilePresenter
 
-    lateinit var eventsRecyclerView: RecyclerView
+    private lateinit var eventsRecyclerView: RecyclerView
     lateinit var adapter: EventAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

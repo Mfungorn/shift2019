@@ -6,5 +6,6 @@ class User (
     var icon: String,
     val email: String,
     var phone: String,
-    var friends: ArrayList<User>
+    var friends: ArrayList<User>,
+    var events: ArrayList<Event>
 )

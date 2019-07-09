@@ -7,7 +7,7 @@ import org.json.JSONObject
 
 class PreferencesApi {
     companion object {
-        val sharedPreferencesName = "tripple.me.prefsTags"
+        const val sharedPreferencesName = "tripple.me.prefsTags"
 
         enum class PrefNames { USER }
 
