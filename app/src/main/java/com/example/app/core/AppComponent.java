@@ -3,6 +3,7 @@ package com.example.app.core;
 import com.example.app.core.modules.ApiModule;
 import com.example.app.core.modules.SharedPreferencesModule;
 import com.example.app.features.MainFlowFragment;
+import com.example.app.features.event.EventPresenter;
 import com.example.app.features.event_new.NewEventPresenter;
 import com.example.app.features.events.EventsPresenter;
 import com.example.app.features.friend_profile.FriendProfilePresenter;
@@ -34,5 +35,7 @@ public interface AppComponent {
     void inject(@NotNull FriendsPresenter friendsPresenter);
 
     void inject(@NotNull FriendProfilePresenter friendProfilePresenter);
+
+    void inject(@NotNull EventPresenter eventPresenter);
 }
 

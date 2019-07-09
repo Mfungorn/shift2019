@@ -10,6 +10,6 @@ data class EventPostPayload (
     var latitude: Double,
     var longitude: Double,
     var date: Date,
-    var members: ArrayList<Guest>,
+    var members: ArrayList<User>,
     var expenses: ArrayList<Expense>
 )

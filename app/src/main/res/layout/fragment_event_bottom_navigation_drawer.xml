@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
                                                    xmlns:tools="http://schemas.android.com/tools"
-                                                   android:id="@+id/navigation_view_layout"
+                                                   android:id="@+id/navigation_view_layout_event"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="wrap_content"
                                                    app:behavior_hideable="true"
                                                    app:layout_behavior="@string/bottom_sheet_behavior">
 
     <com.google.android.material.navigation.NavigationView
-            android:id="@+id/navigation_view"
+            android:id="@+id/navigation_view_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -19,12 +19,12 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2"
-            app:menu="@menu/bottom_nav_drawer_menu"
+            app:menu="@menu/bottom_nav_drawer_menu_event"
             app:theme="@style/NavigationDrawerStyle" >
     </com.google.android.material.navigation.NavigationView>
 
     <TextView
-            android:id="@+id/text_bottom_total_price"
+            android:id="@+id/text_bottom_total_price_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -36,7 +36,7 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-            android:id="@+id/text_bottom_total"
+            android:id="@+id/text_bottom_total_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -56,10 +56,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_bottom_total" />
+            app:layout_constraintTop_toBottomOf="@+id/text_bottom_total_event" />
 
     <ImageView
-            android:id="@+id/close_imageview"
+            android:id="@+id/close_imageview_event"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginTop="8dp"
@@ -67,16 +67,16 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/ic_close_accent_24dp"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/text_bottom_total"
+            app:layout_constraintBottom_toBottomOf="@+id/text_bottom_total_event"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_bottom_total_price" />
+            app:layout_constraintTop_toTopOf="@+id/text_bottom_total_price_event" />
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" app:srcCompat="@drawable/ic_add_accent_24dp"
             android:id="@+id/button_add_new_expense"
-            app:layout_constraintEnd_toStartOf="@+id/close_imageview" android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toStartOf="@+id/close_imageview_event" android:layout_marginEnd="32dp"
             android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
             android:background="@android:color/transparent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/navigation_view"/>
+            app:layout_constraintBottom_toTopOf="@+id/navigation_view_event"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
