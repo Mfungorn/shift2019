@@ -19,7 +19,7 @@ import com.example.app.core.model.Event
 import com.example.app.core.model.User
 import com.example.app.features.BaseFragment
 import com.example.app.features.NavigationManagerChildFragment
-import com.example.app.features.signin.SignInFragment
+import com.example.app.features.sign.SignInFragment
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import javax.inject.Inject

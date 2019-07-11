@@ -10,9 +10,10 @@ import com.example.app.R
 import com.example.app.core.DefaultTextWatcher
 import com.example.app.features.BaseFragment
 import com.example.app.features.MainFlowFragment
+import com.example.app.features.sign.SignUpFragment
 import kotlinx.android.synthetic.main.fragment_signup.view.*
 
-class SignUpFragment : BaseFragment(), SingUpView {
+class SignUpFragment : BaseFragment(), SignUpView {
 
     @InjectPresenter
     lateinit var presenter: SignUpPresenter

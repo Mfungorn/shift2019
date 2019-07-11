@@ -39,8 +39,8 @@ class FriendProfilePresenter : MvpPresenter<FriendProfileView>(), CoroutineScope
         this.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
-                    api.getProfileEvents(user.login)
-                }.data
+                    api.getProfileEventsAsync(user.login).await().data
+                }
                 viewState.onEventsLoaded(result)
             } catch (t: Throwable) {
                 viewState.showMessage("Не удалось получить мероприятия пользователя")

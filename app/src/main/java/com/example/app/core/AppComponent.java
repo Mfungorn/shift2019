@@ -9,6 +9,7 @@ import com.example.app.features.events.EventsPresenter;
 import com.example.app.features.friend_profile.FriendProfilePresenter;
 import com.example.app.features.friends.FriendsPresenter;
 import com.example.app.features.profile.ProfileFragment;
+import com.example.app.features.sign.SignPresenter;
 import dagger.Component;
 import org.jetbrains.annotations.NotNull;
 import com.example.app.features.signin.SignInPresenter;
@@ -37,5 +38,7 @@ public interface AppComponent {
     void inject(@NotNull FriendProfilePresenter friendProfilePresenter);
 
     void inject(@NotNull EventPresenter eventPresenter);
+
+    void inject(@NotNull SignPresenter signPresenter);
 }
 

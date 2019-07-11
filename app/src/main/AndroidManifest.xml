@@ -16,6 +16,7 @@
             android:supportsRtl="true"
             android:screenOrientation = "portrait"
             android:theme="@style/AppTheme"
+            android:usesCleartextTraffic="true"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
                 android:theme="@style/ThisAppTheme.NoActionBar"

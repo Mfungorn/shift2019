@@ -9,13 +9,20 @@ class PreferencesApi {
     companion object {
         const val sharedPreferencesName = "tripple.me.prefsTags"
 
-        enum class PrefNames { USER }
+        enum class PrefNames { USER, TOKEN }
 
         fun getJwt(prefs: SharedPreferences): String? {
+            /*
             val gson = Gson()
-            val jsonRoot = JSONObject(prefs.getString(Companion.PrefNames.USER.name, null))
+            val jsonRoot = JSONObject(prefs.getString(Companion.PrefNames.USER.username, null))
 
             return gson.fromJson(jsonRoot.toString(), User::class.java).login
+            */
+            return  prefs.getString(Companion.PrefNames.TOKEN.name, null)
+        }
+
+        fun setJwt(prefs: SharedPreferences, token: String) {
+            prefs.edit().putString(Companion.PrefNames.TOKEN.name, token).apply()
         }
 
         fun setUser(prefs: SharedPreferences, user: User) {

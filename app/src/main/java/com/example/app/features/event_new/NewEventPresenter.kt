@@ -4,7 +4,8 @@ import android.content.SharedPreferences
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.core.PreferencesApi
-import com.example.app.core.model.*
+import com.example.app.core.model.EventPostPayload
+import com.example.app.core.model.User
 import com.example.app.features.event_new.api.NewEventApi
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
@@ -45,8 +46,8 @@ class NewEventPresenter : MvpPresenter<NewEventView>(), CoroutineScope {
     fun createEvent() {
         this.launch {
             try {
-                withContext(Dispatchers.IO) {
-                    api.createEvent(event)
+                val response = withContext(Dispatchers.IO) {
+                    api.createEventAsync(event).await().data
                 }
             } catch (t: Throwable) {
                 viewState.showMessage("Не удалось создать мероприятие")

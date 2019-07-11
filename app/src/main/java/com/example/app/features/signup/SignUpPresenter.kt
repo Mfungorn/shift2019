@@ -14,7 +14,7 @@ import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
 @InjectViewState
-class SignUpPresenter : MvpPresenter<SingUpView>(), CoroutineScope {
+class SignUpPresenter : MvpPresenter<SignUpView>(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext =
         Dispatchers.Main + SupervisorJob()
@@ -43,27 +43,31 @@ class SignUpPresenter : MvpPresenter<SingUpView>(), CoroutineScope {
             this.launch {
                 try {
                     val response = withContext(Dispatchers.IO) {
-                        api.createUser(Wrapper("OK", UserSignUpPayload(login, name, password, email, phone)))
-                    }.data
+                        api.createUserAsync(
+                            Wrapper(
+                                "OK",
+                                UserSignUpPayload(login, name, password, email, phone))
+                        ).await().data
+                    }
                     PreferencesApi.setUser(prefs, response)
                     viewState.onUserSignUp()
                 } catch (t: Throwable) {
                     viewState.showMessage("Не удалось зарегистрировать пользователя")
                 }
             }
-            /*
-            api.createUser(UserSignUpPayload(login, name, password)).enqueue(object : Callback<Wrapper<User>>{
-                override fun onFailure(call: Call<Wrapper<User>>, t: Throwable) {
 
-                }
-
-                override fun onResponse(call: Call<Wrapper<User>>, response: Response<Wrapper<User>>) {
-                    PreferencesApi.setUser(prefs, response.body()!!.data)
-                    viewState.onUserSignUp()
-                }
-
-            })
-            */
+//            api.createUser(Wrapper("OK", UserSignUpPayload(login, username, password, email, phone)))
+//                .enqueue(object : Callback<Wrapper<User>> {
+//                override fun onFailure(call: Call<Wrapper<User>>, t: Throwable) {
+//
+//                }
+//
+//                override fun onResponse(call: Call<Wrapper<User>>, response: Response<Wrapper<User>>) {
+//                    PreferencesApi.setUser(prefs, response.body()!!.data)
+//                    viewState.onUserSignUp()
+//                }
+//
+//            })
     }
 
     override fun onDestroy() {

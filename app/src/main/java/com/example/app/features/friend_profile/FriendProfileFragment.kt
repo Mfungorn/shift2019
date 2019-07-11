@@ -31,6 +31,10 @@ class FriendProfileFragment(private val friend : User) : BaseFragment(), FriendP
             parent.showUserFriendsFragment(friend)
         }
 
+        view.button_add_to_friends.setOnClickListener {
+            presenter.addFriend(friend)
+        }
+
         eventsRecyclerView = view.list_friend_profie_events
         eventsRecyclerView.layoutManager = LinearLayoutManager(context)
 

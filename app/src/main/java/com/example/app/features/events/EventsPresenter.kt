@@ -25,9 +25,9 @@ class EventsPresenter : MvpPresenter<EventsView>(), CoroutineScope {
     fun getEvents() {
         this.launch {
             try {
-                val events = withContext(Dispatchers.IO){
-                    api.getEvents()
-                }.data
+                val events = withContext(Dispatchers.IO) {
+                    api.getEventsAsync().await().data
+                }
                 viewState.onEventsLoaded(events)
             } catch (t : Throwable) {
                 viewState.showMessage("Не удалось загрузить мероприятия")

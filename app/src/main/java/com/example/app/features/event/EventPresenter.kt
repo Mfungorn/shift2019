@@ -3,7 +3,7 @@ package com.example.app.features.event
 import android.content.SharedPreferences
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
-import com.example.app.core.model.*
+import com.example.app.core.model.Event
 import com.example.app.features.event.api.EventApi
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
@@ -33,8 +33,8 @@ class EventPresenter : MvpPresenter<EventView>(), CoroutineScope {
         this.launch {
             try {
                 event = withContext(Dispatchers.IO) {
-                    api.getEvent(id)
-                }.data
+                    api.getEventAsync(id).await().data
+                }
                 viewState.onEventLoaded(event)
             } catch (t: Throwable) {
                 viewState.showMessage("Не удалось получить мероприятие")

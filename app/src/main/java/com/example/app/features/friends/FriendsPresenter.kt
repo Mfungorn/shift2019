@@ -26,8 +26,8 @@ class FriendsPresenter : MvpPresenter<FriendsView>(), CoroutineScope {
         this.launch {
             try {
                 val results = withContext(Dispatchers.IO) {
-                    api.findFriends(query)
-                }.data
+                    api.findFriendsAsync(query).await().data
+                }
                 viewState.onSearchResultsLoaded(results)
             } catch (t: Throwable) {
                 viewState.showMessage("Не удалось выполнить поиск")

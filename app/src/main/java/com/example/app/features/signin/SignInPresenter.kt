@@ -40,8 +40,12 @@ class SignInPresenter: MvpPresenter<SignInView>(), CoroutineScope {
             this.launch {
                 try {
                     val response = withContext(Dispatchers.IO) {
-                        api.authUser(Wrapper("OK", UserSignInPayload(login, password)))
-                    }.data
+                        api.authUserAsync(Wrapper(
+                            "OK",
+                            UserSignInPayload(login, password))
+                        ).await().data
+                    }
+
                     PreferencesApi.setUser(prefs, response)
                     viewState.onUserAuthenticate()
                 } catch (t: Throwable) {

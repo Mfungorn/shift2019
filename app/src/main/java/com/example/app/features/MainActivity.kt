@@ -2,7 +2,7 @@ package com.example.app.features
 
 import android.os.Bundle
 import com.example.app.R
-import com.example.app.features.signin.SignInFragment
+import com.example.app.features.sign.SignInFragment
 
 class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
