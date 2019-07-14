@@ -1,6 +1,5 @@
 package com.example.app.features.friends_select
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +13,8 @@ import com.example.app.core.adapters.SelectableFriendAdapter
 import com.example.app.core.model.User
 import com.example.app.features.BaseFragment
 import kotlinx.android.synthetic.main.fragment_friends_select.view.*
-import javax.inject.Inject
 
 class FriendsSelectFragment(private var selectedFriendsList: List<User>) : BaseFragment(), FriendsSelectView {
-    @Inject
-    lateinit var prefs: SharedPreferences
 
     @InjectPresenter
     lateinit var selectPresenter: FriendsSelectPresenter
@@ -26,7 +22,7 @@ class FriendsSelectFragment(private var selectedFriendsList: List<User>) : BaseF
     private lateinit var friendsRecyclerView: RecyclerView
     lateinit var adapter: SelectableFriendAdapter
 
-    var user: User = PreferencesApi.getUser(prefs)!!
+    var user: User = PreferencesApi.getUser(selectPresenter.prefs)!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(getLayoutID(), container, false)

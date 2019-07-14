@@ -6,21 +6,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.app.R
-import com.example.app.core.model.*
-import com.example.app.features.BaseFragment
 import com.example.app.core.adapters.IconAdapter
-import java.util.*
-import android.widget.TextView
+import com.example.app.core.model.Event
+import com.example.app.core.model.User
+import com.example.app.features.BaseFragment
 import com.example.app.features.NavigationManagerChildFragment
-import com.example.app.features.event_new.BottomNavigationDrawerFragment
 import com.example.app.features.map.MapFragment
 import kotlinx.android.synthetic.main.fragment_event.view.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 class EventFragment(private val eventId: Long) : BaseFragment(), EventView, NavigationManagerChildFragment {
 
@@ -90,9 +90,7 @@ class EventFragment(private val eventId: Long) : BaseFragment(), EventView, Navi
     @TargetApi(Build.VERSION_CODES.N)
     override fun onEventLoaded(event: Event) {
         eventTitleTextView.text = event.title
-        eventTotalTextView.text = String.format("%.2f ${getString(R.string.currency)}", event.expenses.stream()
-            .mapToDouble { e -> e.cost}
-            .sum())
+        eventTotalTextView.text = String.format("$.2f ${getString(R.string.currency)}", event.totalCost)
         eventDateTextView.text = SimpleDateFormat("dd MMM, yyyy", Locale.ENGLISH).format(event.date)
         eventLocationTextView.text = map.getCity()
         adapter.setIcons(event.members.map { guest -> guest.user })
@@ -107,7 +105,7 @@ class EventFragment(private val eventId: Long) : BaseFragment(), EventView, Navi
     private fun getContainerID() = R.id.container_map_event
 
     private fun showBottomFragment() {
-        val bottomNavDrawerFragment = BottomNavigationDrawerFragment.newInstance(presenter.event.expenses)
+        val bottomNavDrawerFragment = EventBottomNavigationDrawerFragment.newInstance(presenter.event.expenses)
         bottomNavDrawerFragment.show(childFragmentManager, bottomNavDrawerFragment.tag)
     }
 

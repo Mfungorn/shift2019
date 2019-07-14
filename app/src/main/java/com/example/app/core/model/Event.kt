@@ -1,7 +1,6 @@
 package com.example.app.core.model
 
 import java.util.*
-import kotlin.collections.ArrayList
 
 data class Event (
     val id: Long,
@@ -13,5 +12,6 @@ data class Event (
     var date: Date,
     var status: String,
     var members: ArrayList<Guest>,
-    var expenses: ArrayList<Expense>
+    var expenses: ArrayList<Expense>,
+    var totalCost: Double
 )

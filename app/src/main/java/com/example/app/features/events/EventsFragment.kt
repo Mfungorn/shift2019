@@ -1,6 +1,5 @@
 package com.example.app.features.events
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,18 +11,14 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.app.R
 import com.example.app.core.PreferencesApi
 import com.example.app.core.adapters.EventAdapter
+import com.example.app.core.adapters.EventAdapter.SelectEventListener
 import com.example.app.core.model.Event
 import com.example.app.features.BaseFragment
-import com.example.app.core.adapters.EventAdapter.SelectEventListener
 import com.example.app.features.NavigationManagerChildFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.fragment_events.view.*
-import javax.inject.Inject
 
 class EventsFragment : BaseFragment(), EventsView, NavigationManagerChildFragment {
-
-    @Inject
-    lateinit var prefs: SharedPreferences
 
     @InjectPresenter
     lateinit var presenter: EventsPresenter
@@ -41,9 +36,12 @@ class EventsFragment : BaseFragment(), EventsView, NavigationManagerChildFragmen
         }
 
         view.button_profile.setOnClickListener {
-            val user = PreferencesApi.getUser(prefs)
+            val user = PreferencesApi.getUser(presenter.prefs)
             if (user != null)
                 parent.showUserProfileFragment(user)
+            else {
+
+            }
         }
 
         recyclerView = view.list_events
@@ -55,7 +53,6 @@ class EventsFragment : BaseFragment(), EventsView, NavigationManagerChildFragmen
             }
         })
         recyclerView.adapter = adapter
-        presenter.getEvents()
 
         return view
     }

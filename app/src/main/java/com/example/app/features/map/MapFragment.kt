@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.app.R
 import com.example.app.features.BaseFragment
+import com.example.app.features.event_new.NewEventFragment
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
@@ -193,6 +194,9 @@ class MapFragment(private var latitude: Double = 0.0, private var longitude: Dou
         googleMap.addMarker(MarkerOptions().position(p0!!).draggable(true))
         latitude = p0.latitude
         longitude = p0.longitude
+        val currentParent = parentFragment
+        if (currentParent is NewEventFragment)
+            currentParent.setNewEventLocation(getCity())
         Toast.makeText(context, "Lat:$latitude\nLng:$longitude", Toast.LENGTH_SHORT).show()
     }
 

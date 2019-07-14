@@ -1,5 +1,7 @@
 package com.example.app.features.events
 
+import android.content.SharedPreferences
+import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.features.events.api.EventsApi
@@ -8,12 +10,16 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
+@InjectViewState
 class EventsPresenter : MvpPresenter<EventsView>(), CoroutineScope {
     override val coroutineContext: CoroutineContext =
         Dispatchers.Main + SupervisorJob()
 
     @Inject
     lateinit var retrofit: Retrofit
+
+    @Inject
+    lateinit var prefs: SharedPreferences
 
     private val api: EventsApi
 
@@ -22,7 +28,12 @@ class EventsPresenter : MvpPresenter<EventsView>(), CoroutineScope {
         api = retrofit.create(EventsApi::class.java)
     }
 
-    fun getEvents() {
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        getEvents()
+    }
+
+    private fun getEvents() {
         this.launch {
             try {
                 val events = withContext(Dispatchers.IO) {

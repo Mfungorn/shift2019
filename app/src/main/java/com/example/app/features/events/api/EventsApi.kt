@@ -6,6 +6,6 @@ import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 
 interface EventsApi {
-    @GET("/events")
+    @GET("/events/")
     fun getEventsAsync() : Deferred<Wrapper<ArrayList<Event>>>
 }

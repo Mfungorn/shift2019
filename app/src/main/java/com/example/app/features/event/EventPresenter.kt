@@ -1,6 +1,7 @@
 package com.example.app.features.event
 
 import android.content.SharedPreferences
+import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.core.model.Event
@@ -10,6 +11,7 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
+@InjectViewState
 class EventPresenter : MvpPresenter<EventView>(), CoroutineScope {
     override val coroutineContext: CoroutineContext =
         Dispatchers.Main + SupervisorJob()

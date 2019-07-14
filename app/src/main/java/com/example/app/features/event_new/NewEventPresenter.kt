@@ -1,6 +1,7 @@
 package com.example.app.features.event_new
 
 import android.content.SharedPreferences
+import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.core.PreferencesApi
@@ -14,6 +15,7 @@ import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
+@InjectViewState
 class NewEventPresenter : MvpPresenter<NewEventView>(), CoroutineScope {
     override val coroutineContext: CoroutineContext =
         Dispatchers.Main + SupervisorJob()
@@ -29,7 +31,7 @@ class NewEventPresenter : MvpPresenter<NewEventView>(), CoroutineScope {
     var currentTime = Calendar.getInstance()!!
 
     var event = EventPostPayload(
-        PreferencesApi.getUser(prefs)!!,
+        null,
         "",
         "",
         .0,
@@ -47,6 +49,7 @@ class NewEventPresenter : MvpPresenter<NewEventView>(), CoroutineScope {
         this.launch {
             try {
                 val response = withContext(Dispatchers.IO) {
+                    event.author = PreferencesApi.getUser(prefs)
                     api.createEventAsync(event).await().data
                 }
             } catch (t: Throwable) {

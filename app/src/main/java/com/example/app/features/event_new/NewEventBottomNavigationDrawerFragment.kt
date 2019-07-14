@@ -1,7 +1,9 @@
 package com.example.app.features.event_new
 
+import android.annotation.TargetApi
 import android.app.Dialog
 import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -12,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import com.example.app.R
 import com.example.app.core.MvpBottomSheetDialogFragment
 import com.example.app.core.model.Expense
-import com.example.app.features.event.BottomNavigationDrawerFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.dialog_add_expense.view.*
 import kotlinx.android.synthetic.main.fragment_new_event_bottom_navigation_drawer.*
 import kotlinx.android.synthetic.main.fragment_new_event_bottom_navigation_drawer.view.*
 
-class BottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) : MvpBottomSheetDialogFragment(),
+class NewEventBottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) : MvpBottomSheetDialogFragment(),
     NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var navigationView: NavigationView
@@ -68,9 +69,16 @@ class BottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) :
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
     private fun addCarryToNavigationDrawer(expense: Expense) {
         navigationView.menu.add("${expense.name}: ${expense.cost} ${getString(R.string.currency)}")
         expenses.add(expense)
+
+        val total = expenses.stream()
+            .mapToDouble { e -> e.cost }
+            .sum()
+        (parentFragment as NewEventFragment).setNewEventTotal(
+            String.format("%.2f ${getString(R.string.currency)}", total))
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean =
@@ -100,6 +108,7 @@ class BottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) :
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
                     when (newState) {
                         BottomSheetBehavior.STATE_HIDDEN -> dismiss()
+                        BottomSheetBehavior.STATE_HALF_EXPANDED -> close_imageview.visibility = View.VISIBLE
                         else -> close_imageview.visibility = View.GONE
                     }
                 }
@@ -109,8 +118,8 @@ class BottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) :
     }
 
     companion object {
-        fun newInstance(expenses: ArrayList<Expense>): BottomNavigationDrawerFragment {
-            return BottomNavigationDrawerFragment(expenses)
+        fun newInstance(expenses: ArrayList<Expense>): NewEventBottomNavigationDrawerFragment {
+            return NewEventBottomNavigationDrawerFragment(expenses)
         }
     }
 }

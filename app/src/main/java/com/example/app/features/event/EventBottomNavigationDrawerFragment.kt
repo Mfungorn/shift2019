@@ -7,24 +7,26 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import com.example.app.R
 import com.example.app.core.MvpBottomSheetDialogFragment
 import com.example.app.core.model.Expense
-import com.example.app.features.event_new.BottomNavigationDrawerFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.fragment_event_bottom_navigation_drawer.*
 import kotlinx.android.synthetic.main.fragment_event_bottom_navigation_drawer.view.*
-import kotlinx.android.synthetic.main.fragment_new_event_bottom_navigation_drawer.*
 
-class BottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) : MvpBottomSheetDialogFragment(),
+class EventBottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) : MvpBottomSheetDialogFragment(),
     NavigationView.OnNavigationItemSelectedListener {
 
+    private lateinit var closeButton: ImageView
     private lateinit var navigationView: NavigationView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(getLayoutID(), container, false)
+
+        closeButton = view.close_imageview_event
 
         navigationView = view.navigation_view_event
         navigationView.setNavigationItemSelectedListener(this)
@@ -40,7 +42,7 @@ class BottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) :
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        close_imageview.setOnClickListener {
+        closeButton.setOnClickListener {
             this.dismiss()
         }
     }
@@ -71,6 +73,7 @@ class BottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) :
 
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
                     when (newState) {
+                        BottomSheetBehavior.STATE_HALF_EXPANDED -> closeButton.visibility = View.VISIBLE
                         BottomSheetBehavior.STATE_HIDDEN -> dismiss()
                         else -> close_imageview_event.visibility = View.GONE
                     }
@@ -81,8 +84,8 @@ class BottomNavigationDrawerFragment(private var expenses: ArrayList<Expense>) :
     }
 
     companion object {
-        fun newInstance(expenses: ArrayList<Expense>): BottomNavigationDrawerFragment {
-            return BottomNavigationDrawerFragment(expenses)
+        fun newInstance(expenses: ArrayList<Expense>): EventBottomNavigationDrawerFragment {
+            return EventBottomNavigationDrawerFragment(expenses)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.app.features.friends
 
+import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.app.App
 import com.example.app.features.friends.api.FriendsApi
@@ -8,6 +9,7 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
+@InjectViewState
 class FriendsPresenter : MvpPresenter<FriendsView>(), CoroutineScope {
     override val coroutineContext: CoroutineContext =
         Dispatchers.Main + SupervisorJob()

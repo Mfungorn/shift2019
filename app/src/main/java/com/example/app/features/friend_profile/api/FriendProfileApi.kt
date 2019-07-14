@@ -8,7 +8,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface FriendProfileApi {
-    @POST("/user/friends/{login}")
+    @POST("/user/{login}")
     fun addFriend(@Path("login") login: String)
 
     @GET("/user/friends/{login}/events")

@@ -5,6 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorBackgroundDark"
 >
 
     <ImageView
@@ -19,9 +20,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textinput_signin_login"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/LoginTextInputLayoutStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:boxStrokeColor="#FEFEFE"
+            android:textColorHint="#FEFEFE"
             app:layout_constraintTop_toBottomOf="@id/logo"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,8 +39,10 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/LoginTextInputLayoutStyle"
             android:id="@+id/textinput_signin_password"
+            app:boxStrokeColor="#FEFEFE"
+            android:textColorHint="#FEFEFE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +63,8 @@
             android:layout_height="wrap_content"
             android:textAllCaps="false"
             android:background="@color/colorAccent"
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="#000"
             android:text="@string/sign_in"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/textinput_signin_password"
@@ -73,8 +80,8 @@
             android:layout_height="wrap_content"
             android:textAllCaps="false"
             android:background="@android:color/transparent"
+            android:textColor="#FEFEFE"
             android:text="@string/no_account"
-            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/button_signin"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"

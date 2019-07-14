@@ -44,8 +44,8 @@ class FriendProfileFragment(private val friend : User) : BaseFragment(), FriendP
             }
         })
         eventsRecyclerView.adapter = adapter
-
-        presenter.getProfileEvents(friend)
+        adapter.setEvents(friend.events)
+        //presenter.getProfileEvents(friend)
 
         return view
     }

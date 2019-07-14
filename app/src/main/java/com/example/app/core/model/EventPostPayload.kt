@@ -1,10 +1,9 @@
 package com.example.app.core.model
 
 import java.util.*
-import kotlin.collections.ArrayList
 
 data class EventPostPayload (
-    val author: User,
+    var author: User?,
     var title: String,
     var about: String,
     var latitude: Double,

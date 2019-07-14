@@ -3,7 +3,8 @@
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorBackgroundDark">
 
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -15,7 +16,7 @@
 
         <androidx.appcompat.widget.Toolbar
                 style="@style/ThisAppTheme.ToolBar"
-                app:titleTextColor="#ffffff"
+                app:titleTextColor="@color/colorText"
                 android:id="@+id/signup_trip_tool_bar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -27,7 +28,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textinput_signup_name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/LoginTextInputLayoutStyle"
+            app:boxStrokeColor="#FEFEFE"
+            android:textColorHint="#FEFEFE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -43,7 +46,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textinput_signup_login"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/LoginTextInputLayoutStyle"
+            app:boxStrokeColor="#FEFEFE"
+            android:textColorHint="#FEFEFE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -58,7 +63,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textinput_signup_password"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/LoginTextInputLayoutStyle"
+            app:boxStrokeColor="#FEFEFE"
+            android:textColorHint="#FEFEFE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -74,7 +81,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textinput_signup_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/LoginTextInputLayoutStyle"
+            app:boxStrokeColor="#FEFEFE"
+            android:textColorHint="#FEFEFE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -90,7 +99,9 @@
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textinput_signup_phone"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/LoginTextInputLayoutStyle"
+            app:boxStrokeColor="#FEFEFE"
+            android:textColorHint="#FEFEFE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -101,7 +112,7 @@
                 android:inputType="phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="+7(___)___-____"/>
+                android:hint="Phone"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -110,6 +121,7 @@
             app:strokeWidth="2dp"
             android:id="@+id/reguser_button"
             app:strokeColor="@color/colorAccent"
+            android:textColor="@color/colorAccent"
             android:layout_marginTop="16dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"

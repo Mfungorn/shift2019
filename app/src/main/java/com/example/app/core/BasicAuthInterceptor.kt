@@ -9,12 +9,12 @@ class BasicAuthInterceptor(val prefs: SharedPreferences) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         return if (request.method() == "POST" && (
-                    request.url().encodedPath().contains("login")
+                    request.url().encodedPathSegments().contains("login")
                             or
-                            request.url().encodedPath().contains("signup"))
+                            request.url().encodedPathSegments().contains("signup"))
         ) {
             val response = chain.proceed(request)
-            val header =  response.header("Authorization")
+            val header = response.header("Authorization")
             PreferencesApi.setJwt(prefs, header ?: "")
             return response
         }

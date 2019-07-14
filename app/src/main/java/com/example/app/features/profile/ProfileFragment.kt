@@ -94,7 +94,8 @@ class ProfileFragment : BaseFragment(), NavigationManagerChildFragment {
         nameTextView.text = user.username
         nicknameView.text = user.login
 
-        adapter.setEvents(user.events) // Ивенты, которе пользователь организовал
+        if (user.events != null)
+            adapter.setEvents(user.events) // Ивенты, которе пользователь организовал
     }
 
     override fun getLayoutID(): Int = R.layout.fragment_profile

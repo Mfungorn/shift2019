@@ -3,23 +3,24 @@ package com.example.app.features.event_new
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.app.R
 import com.example.app.core.DefaultTextWatcher
-import com.example.app.core.model.*
-import com.example.app.features.BaseFragment
 import com.example.app.core.adapters.IconAdapter
-import kotlinx.android.synthetic.main.fragment_new_event.view.*
-import java.util.*
-import android.text.format.DateUtils
+import com.example.app.core.model.User
+import com.example.app.features.BaseFragment
 import com.example.app.features.NavigationManagerChildFragment
 import com.example.app.features.map.MapFragment
+import kotlinx.android.synthetic.main.fragment_new_event.view.*
+import java.util.*
 
 
 class NewEventFragment : BaseFragment(), NewEventView, NavigationManagerChildFragment {
@@ -29,6 +30,8 @@ class NewEventFragment : BaseFragment(), NewEventView, NavigationManagerChildFra
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: IconAdapter
+    private lateinit var locationTextView: TextView
+    private lateinit var totalCostTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(getLayoutID(), container, false)
@@ -44,6 +47,9 @@ class NewEventFragment : BaseFragment(), NewEventView, NavigationManagerChildFra
                 }
             })
         recyclerView.adapter = adapter
+
+        locationTextView = view.text_new_event_location
+        totalCostTextView = view.text_new_event_total
 
         view.button_new_event_create.setOnClickListener {
             presenter.createEvent()
@@ -90,7 +96,7 @@ class NewEventFragment : BaseFragment(), NewEventView, NavigationManagerChildFra
         }
 
         view.fab_new_event_add_friend.setOnClickListener {
-            parent.showFriendsSelectFragment(presenter.event.members)
+            parent.showFriendsSelectFragment(presenter.event.members as List<User>)
         }
 
         view.fab_add_carry.setOnClickListener {
@@ -111,12 +117,20 @@ class NewEventFragment : BaseFragment(), NewEventView, NavigationManagerChildFra
         Toast.makeText(context, s, Toast.LENGTH_SHORT).show()
     }
 
+    public fun setNewEventLocation(location: String) {
+        locationTextView.text = location
+    }
+
+    public fun setNewEventTotal(total: String) {
+        totalCostTextView.text = total
+    }
+
     override fun getLayoutID() = R.layout.fragment_new_event
 
     private fun getContainerID() = R.id.container_map
 
     private fun showBottomFragment() {
-        val bottomNavDrawerFragment = BottomNavigationDrawerFragment.newInstance(presenter.event.expenses)
+        val bottomNavDrawerFragment = NewEventBottomNavigationDrawerFragment.newInstance(presenter.event.expenses)
         bottomNavDrawerFragment.show(childFragmentManager, bottomNavDrawerFragment.tag)
     }
 
